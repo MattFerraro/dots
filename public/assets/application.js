@@ -107,11 +107,25 @@ function redraw() {
 }
 
 $(function(){
-
     window.onkeydown = key_down;
     window.onkeyup = key_up;
     setInterval(update_position, 10);
     setInterval(redraw, 10);
+
+    if (window["WebSocket"]) {
+        conn = new WebSocket("ws://looce.com:8000/ws");
+        conn.onclose = function(e) {
+            console.log('closing');
+        };
+
+        conn.onmessage = function(e) {
+            console.log(e.data);
+        };
+    } else {
+        console.log('die');
+    }
+
 });
+
 
 
