@@ -110,14 +110,6 @@ function redraw() {
     context.strokeStyle = '#003300';
     context.stroke();
 
-    // console.log(all_clients);
-
-    // for (var i = all_clients.length - 1; i >= 0; i--) {
-    //     client = all_clients[i];
-
-    //     console.log(client);
-
-    // };
 
     $.each(all_clients, function(col, client) {
         console.log(client);
@@ -146,7 +138,7 @@ $(function(){
     window.onkeydown = key_down;
     window.onkeyup = key_up;
     setInterval(update_position, 10);
-    setInterval(redraw, 100);
+    setInterval(redraw, 10);
 
     websocket = new WebSocket("ws://" + window.location.host + ":8000/ws");
     websocket.onclose = function(e) {
@@ -158,7 +150,7 @@ $(function(){
         all_clients[data['color']] = data;
     };
 
-    setInterval(say_stuff, 1000);
+    setInterval(say_stuff, 10);
 
 });
 
