@@ -112,18 +112,14 @@ $(function(){
     setInterval(update_position, 10);
     setInterval(redraw, 10);
 
-    if (window["WebSocket"]) {
-        conn = new WebSocket("ws://localhost:8000/ws");
-        conn.onclose = function(e) {
-            console.log('closing');
-        };
+    conn = new WebSocket("ws://localhost:8000/ws");
+    conn.onclose = function(e) {
+        console.log('closing');
+    };
 
-        conn.onmessage = function(e) {
-            console.log(e.data);
-        };
-    } else {
-        console.log('die');
-    }
+    conn.onmessage = function(e) {
+        console.log(e.data);
+    };
 
 });
 
