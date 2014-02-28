@@ -45,7 +45,8 @@ func (c *connection) reader() {
         if err != nil {
             break
         }
-        fmt.Println("msg: %s", message)
+        fmt.Println("msg: %+v", h)
+
         h.broadcast <- message
     }
     c.ws.Close()

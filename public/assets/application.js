@@ -1,9 +1,10 @@
 
-var x = 100;
-var y = 100;
-var speed = 1;
-width = 500;
-height = 500;
+var x = 100,
+    y = 100,
+    client_color = '#'+Math.floor(Math.random()*16777215).toString(16),
+    speed = 1,
+    width = 500,
+    height = 500;
 
 var left, right, up, down;
 left = right = up = down = false;
@@ -109,10 +110,17 @@ function redraw() {
 }
 
 function say_stuff() {
-    console.log("saying stuff to websocket");
-    websocket.send(JSON.stringify({
-        id: "client1"
-    }));
+    console.log("Sending Client Info");
+
+    client = {
+        x: x,
+        y: y,
+        color: client_color,
+    };
+
+    console.log(client);
+
+    websocket.send(JSON.stringify(client));
 }
 
 $(function(){
