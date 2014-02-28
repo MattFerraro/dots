@@ -45,7 +45,6 @@ func (c *connection) reader() {
         if err != nil {
             break
         }
-        fmt.Println("msg: %+v", h)
 
         h.broadcast <- message
     }
@@ -63,7 +62,9 @@ func (c *connection) writer() {
 }
 
 func main() {
+    fmt.Println("Starting")
     flag.Parse()
+    go h.run()
     http.HandleFunc("/ws", wsHandler)
     if err := http.ListenAndServe(*addr, nil); err != nil {
         log.Fatal("ListenAndServe:", err)
