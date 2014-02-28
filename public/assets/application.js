@@ -148,7 +148,7 @@ $(function(){
     setInterval(update_position, 10);
     setInterval(redraw, 100);
 
-    websocket = new WebSocket("/ws");
+    websocket = new WebSocket("ws://" + window.location.host + "/ws");
     websocket.onclose = function(e) {
         console.log('closing');
     };
