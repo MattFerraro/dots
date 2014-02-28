@@ -121,6 +121,11 @@ function redraw() {
             context.lineWidth = 5;
             context.strokeStyle = '#003300';
             context.stroke();
+
+
+            if (client.rx_time > Date.now() + 500) {
+                delete all_clients["col"]
+            }
         }
     })
 }
@@ -147,6 +152,7 @@ $(function(){
 
     websocket.onmessage = function(e) {
         data = JSON.parse(e.data);
+        data['rx_time'] = Date.now();
         all_clients[data['color']] = data;
     };
 
