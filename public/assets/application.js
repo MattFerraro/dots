@@ -113,7 +113,7 @@ $(function(){
     setInterval(redraw, 10);
 
     if (window["WebSocket"]) {
-        conn = new WebSocket("ws://looce.com:8000/ws");
+        conn = new WebSocket("ws://localhost:8000/ws");
         conn.onclose = function(e) {
             console.log('closing');
         };
