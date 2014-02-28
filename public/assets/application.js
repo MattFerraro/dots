@@ -117,19 +117,19 @@ function redraw() {
 
     //     console.log(client);
 
-        // if (client.color != client_color) {
-        //     context.beginPath();
-        //     context.arc(client.x, client.y, radius, 0, 2 * Math.PI, false);
-        //     context.fillStyle = client.color;
-        //     context.fill();
-        //     context.lineWidth = 5;
-        //     context.strokeStyle = '#003300';
-        //     context.stroke();
-        // }
     // };
 
-    $.each(all_clients, function(client) {
-
+    $.each(all_clients, function(col, client) {
+        console.log(client);
+        if (client['color'] != client_color) {
+            context.beginPath();
+            context.arc(client.x, client.y, radius, 0, 2 * Math.PI, false);
+            context.fillStyle = client.color;
+            context.fill();
+            context.lineWidth = 5;
+            context.strokeStyle = '#003300';
+            context.stroke();
+        }
     })
 }
 
@@ -148,7 +148,7 @@ $(function(){
     setInterval(update_position, 10);
     setInterval(redraw, 100);
 
-    websocket = new WebSocket("ws://localhost:8000/ws");
+    websocket = new WebSocket("/ws");
     websocket.onclose = function(e) {
         console.log('closing');
     };
