@@ -12,6 +12,8 @@ var edging = false;
 
 var websocket;
 
+var all_clients = {};
+
 function key_down(e) {
     switch (e.keyCode) {
         case 40:
@@ -102,24 +104,41 @@ function redraw() {
     var radius = 15;
     context.beginPath();
     context.arc(x, y, radius, 0, 2 * Math.PI, false);
-    context.fillStyle = 'green';
+    context.fillStyle = client_color;
     context.fill();
     context.lineWidth = 5;
     context.strokeStyle = '#003300';
     context.stroke();
+
+    // console.log(all_clients);
+
+    // for (var i = all_clients.length - 1; i >= 0; i--) {
+    //     client = all_clients[i];
+
+    //     console.log(client);
+
+        // if (client.color != client_color) {
+        //     context.beginPath();
+        //     context.arc(client.x, client.y, radius, 0, 2 * Math.PI, false);
+        //     context.fillStyle = client.color;
+        //     context.fill();
+        //     context.lineWidth = 5;
+        //     context.strokeStyle = '#003300';
+        //     context.stroke();
+        // }
+    // };
+
+    $.each(all_clients, function(client) {
+
+    })
 }
 
 function say_stuff() {
-    console.log("Sending Client Info");
-
     client = {
         x: x,
         y: y,
         color: client_color,
     };
-
-    console.log(client);
-
     websocket.send(JSON.stringify(client));
 }
 
@@ -127,7 +146,7 @@ $(function(){
     window.onkeydown = key_down;
     window.onkeyup = key_up;
     setInterval(update_position, 10);
-    setInterval(redraw, 10);
+    setInterval(redraw, 100);
 
     websocket = new WebSocket("ws://localhost:8000/ws");
     websocket.onclose = function(e) {
@@ -135,7 +154,8 @@ $(function(){
     };
 
     websocket.onmessage = function(e) {
-        console.log(e.data);
+        data = JSON.parse(e.data);
+        all_clients[data['color']] = data;
     };
 
     setInterval(say_stuff, 1000);
