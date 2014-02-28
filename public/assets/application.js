@@ -9,6 +9,8 @@ var left, right, up, down;
 left = right = up = down = false;
 var edging = false;
 
+var websocket;
+
 function key_down(e) {
     switch (e.keyCode) {
         case 40:
@@ -106,20 +108,29 @@ function redraw() {
     context.stroke();
 }
 
+function say_stuff() {
+    console.log("saying stuff to websocket");
+    websocket.send(JSON.stringify({
+        id: "client1"
+    }));
+}
+
 $(function(){
     window.onkeydown = key_down;
     window.onkeyup = key_up;
     setInterval(update_position, 10);
     setInterval(redraw, 10);
 
-    conn = new WebSocket("ws://localhost:8000/ws");
-    conn.onclose = function(e) {
+    websocket = new WebSocket("ws://localhost:8000/ws");
+    websocket.onclose = function(e) {
         console.log('closing');
     };
 
-    conn.onmessage = function(e) {
+    websocket.onmessage = function(e) {
         console.log(e.data);
     };
+
+    setInterval(say_stuff, 1000);
 
 });
 
